@@ -2758,6 +2758,7 @@ MonoBehaviour:
   robertaSprite: {fileID: 21300000, guid: d0d733e0073decf4a8e934903bbc76cd, type: 3}
   turnCount: 0
   activePokemonGameObject: {fileID: 293815755}
+  enemyPokemonGameObject: {fileID: 1310976630}
   queuedPlayerAction: 0
   friendlyPokemonSavedSpeed: 0
   enemyPokemonSavedSpeed: 0

@@ -174,6 +174,11 @@ public class StatBlock
         }
     }
 
+    public float getPercentHP()
+    {
+        return (float)this.current_hp / this.base_hp;
+    }
+
     public void changeStage(Stat stat, int amountToChange)
     {
         switch(stat)
@@ -499,6 +504,11 @@ public class Pokemon //: MonoBehaviour
     {
         int index = UnityEngine.Random.Range(0, moves.Count);
         this.executeMoveAt(index, defender);
+    }
+
+    public Move getRandomMove()
+    {
+        return this.moves[UnityEngine.Random.Range(0, moves.Count)];
     }
 
     public static int calculateAdjustedInjury(Pokemon attacker, Pokemon defender, Move move, bool crit)

@@ -79,6 +79,7 @@ public class GameController : MonoBehaviour
     // miscellany
     public int turnCount;
     public GameObject activePokemonGameObject;
+    public GameObject enemyPokemonGameObject;
     public PlayerInput queuedPlayerAction;
     public int friendlyPokemonSavedSpeed;
     public int enemyPokemonSavedSpeed;
@@ -157,6 +158,13 @@ public class GameController : MonoBehaviour
                 // can just switch to waiting for input; if we've gotten here,
                 // then we know that the dialogue queue is empty
                 ++this.turnCount;
+
+                // Change type every 6 turns
+                if(this.turnCount % 6 == 0 && this.turnCount != 0)
+                {
+                    DialogueManager.instance.addToQueue("Life is finding a way...");
+                    this.enemyPokemonGameObject.GetComponent<EnemyPokemon>().chooseNewAttribute();
+                }
                 gameState = GameState.WAITING_FOR_INPUT;
                 break;
             case GameState.INPUT_RECEIVED:
@@ -545,10 +553,10 @@ public class GameController : MonoBehaviour
     {
         // Initialize enemy pokemon
         int hp      = 1000;
-        int atk     = 500; // TODO
-        int def     = 120;
+        int atk     = 120; // TODO
+        int def     = 100;
         int spAtk   = 120;
-        int spDef   = 120;
+        int spDef   = 100;
         int spe     = 80;
         StatBlock statBlock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
         enemyPokemon = new Pokemon("DIRE T-REX", statBlock);
@@ -558,12 +566,12 @@ public class GameController : MonoBehaviour
         enemyPokemon.types.Add(rock);
 
         enemyPokemon.moves.Add(Movelist.bite);
-        //enemyPokemon.moves.Add(Movelist.stomp);
-        //enemyPokemon.moves.Add(Movelist.meteor);
-        //enemyPokemon.moves.Add(Movelist.amber);
+        enemyPokemon.moves.Add(Movelist.stomp);
+        enemyPokemon.moves.Add(Movelist.meteor);
+        enemyPokemon.moves.Add(Movelist.amber);
         //enemyPokemon.moves.Add(Movelist.earthquake);
 
-        //// utility moves
+        // utility moves
         //enemyPokemon.moves.Add(Movelist.lifeFindsAWay);
         //enemyPokemon.moves.Add(Movelist.mustGoFaster);
         //enemyPokemon.moves.Add(Movelist.cleverGirl);

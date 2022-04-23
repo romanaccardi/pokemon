@@ -58,4 +58,46 @@ public class Attribute
     {
         return resistantWeakAgainst.ContainsKey(other);
     }
+
+    public string getName()
+    {
+        switch(type)
+        {
+            case TypeSpecifier.NORMAL:
+                return "NORMAL";
+            case TypeSpecifier.FIRE:
+                return "FIRE";
+            case TypeSpecifier.WATER:
+                return "WATER";
+            case TypeSpecifier.ELECTRIC:
+                return "ELECTRIC";
+            case TypeSpecifier.GRASS:
+                return "GRASS";
+            case TypeSpecifier.ICE:
+                return "ICE";
+            case TypeSpecifier.FIGHTING:
+                return "FIGHTING";
+            case TypeSpecifier.POISON:
+                return "POISON";
+            case TypeSpecifier.FLYING:
+                return "FLYING";
+            case TypeSpecifier.PSYCHIC:
+                return "PSYCHIC";
+            case TypeSpecifier.BUG:
+                return "BUG";
+            case TypeSpecifier.ROCK:
+                return "ROCK";
+            case TypeSpecifier.GHOST:
+                return "GHOST";
+            case TypeSpecifier.DRAGON:
+                return "DRAGON";
+            case TypeSpecifier.DARK:
+                return "DARK";
+            case TypeSpecifier.STEEL:
+                return "STEEL";
+            case TypeSpecifier.FAIRY:
+                return "FAIRY";
+        }
+        return "";
+    }
 }
