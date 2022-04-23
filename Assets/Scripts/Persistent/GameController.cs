@@ -118,6 +118,9 @@ public class GameController : MonoBehaviour
         this.previousPokemonFainted = true;
 
         DialogueManager.instance.addToQueue("A wild " + getEnemyPokemon().name + " appeared!");
+        this.enemyPokemonGameObject.GetComponent<EnemyPokemon>().initAttributes();
+        DialogueManager.instance.addToQueue("Life is finding a way...");
+        this.enemyPokemonGameObject.GetComponent<EnemyPokemon>().chooseNewAttribute();
     }
 
     private bool friendlyPokemonIsFaster()
@@ -551,11 +554,11 @@ public class GameController : MonoBehaviour
     private void roberta()
     {
         // Initialize enemy pokemon
-        int hp      = 1000;
+        int hp      = 1200;
         int atk     = 120; // TODO
-        int def     = 100;
+        int def     = 120;
         int spAtk   = 120;
-        int spDef   = 100;
+        int spDef   = 120;
         int spe     = 80;
         StatBlock statBlock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
         enemyPokemon = new Pokemon("DIRE T-REX", statBlock);

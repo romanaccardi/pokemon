@@ -28,6 +28,12 @@ public class EnemyPokemon : MonoBehaviour
     void Start()
     {
 
+        
+    }
+
+    public void initAttributes()
+    {
+
         attributeList = new List<Attribute>();
 
         attributeList.Add(GameController.fire);
@@ -53,7 +59,6 @@ public class EnemyPokemon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void executeMove()
