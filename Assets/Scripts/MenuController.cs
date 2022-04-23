@@ -146,22 +146,23 @@ public class MenuController : MonoBehaviour
             Button button = buttons[i];
 
             // Update name
-            button.transform.GetChild((int)GameObjectIndices.NAME).GetComponent<UnityEngine.UI.Text>().text = correspondingPokemon.name;
+            button.transform.Find("Name").GetComponent<UnityEngine.UI.Text>().text = correspondingPokemon.name;
 
             // Update moveset
-            Text moveset = button.transform.GetChild((int)GameObjectIndices.MOVES).GetComponent<UnityEngine.UI.Text>();
+            Text moveset = button.transform.Find("Moves").GetComponent<UnityEngine.UI.Text>();
             moveset.text = "";
             for(int j = 0; j < correspondingPokemon.moves.Count; ++j)
             {
+                Debug.Log(moveset.text);
                 moveset.text += correspondingPokemon.moves[j].name + "\n";
             }
 
             // Update sprite
-            Image image = button.transform.GetChild((int)GameObjectIndices.IMAGE).GetComponent<UnityEngine.UI.Image>();
+            Image image = button.transform.Find("Image").GetComponent<UnityEngine.UI.Image>();
             image.sprite = correspondingPokemon.frontSprite;
 
             // Update health bar
-            Image healthBar = button.transform.GetChild((int)GameObjectIndices.ALLY_HEALTH_ACTUAL_BAR).GetComponent<UnityEngine.UI.Image>();
+            Image healthBar = button.transform.Find("AllyHealthActualBar").GetComponent<UnityEngine.UI.Image>();
             healthBar.fillAmount = (float)correspondingPokemon.statBlock.current_hp / correspondingPokemon.statBlock.base_hp;
         }
     }

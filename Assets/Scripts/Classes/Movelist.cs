@@ -21,6 +21,21 @@ public class Movelist : MonoBehaviour
     public static Move edictProtect;
 
     // Fluffy IV
+    public static Move fireFang;
+    public static Move chainsaw;
+    public static Move tailWhip;
+
+    // Fluffy V
+
+    // Oatmeal
+
+    // Lady Edelmarch
+    public static Move twilightAxe;
+    public static Move rest;
+    public static Move rage;
+    public static Move punch;
+
+    // Bernie
 
     // Roberta
     public static Move mustGoFaster;
@@ -92,11 +107,71 @@ public class Movelist : MonoBehaviour
         ///
         /// FLUFFY IV
         /// 
-
         // Bite
 
         // Fire Fang
+        fireFang = new Move("FIRE FANG");
+        fireFang.attribute = GameController.fire;
+        fireFang.power = 65;
+        fireFang.special = false;
+        fireFang.accuracy = 0.95f;
+        fireFang.callback = new MoveCallback(chanceToBurn);
 
+        // Chainsaw
+        chainsaw = new Move("CHAINSAW");
+        chainsaw.attribute = GameController.electric;
+        chainsaw.power = 140;
+        chainsaw.special = false;
+        chainsaw.accuracy = 0.6f;
+
+        // Tail Whip
+        tailWhip = new Move("TAIL WHIP");
+        tailWhip.attribute = GameController.normal;
+        tailWhip.power = 0;
+        tailWhip.special = true;
+        tailWhip.callback = new MoveCallback(lowerDefense1);
+
+        ///
+        /// FLUFFY V
+        /// 
+
+        ///
+        /// OATMEAL
+        /// 
+
+        ///
+        /// LADY EDELMARCH
+        /// 
+        // Twilight axe
+        twilightAxe = new Move("TWILIGHT AXE");
+        twilightAxe.attribute = GameController.ghost;
+        twilightAxe.power = 150;
+        twilightAxe.special = false;
+        twilightAxe.accuracy = 0.5f;
+
+        // Rest
+        rest = new Move("REST");
+        rest.attribute = GameController.normal;
+        rest.power = 0;
+        rest.special = true;
+        rest.callback = new MoveCallback(restCallback);
+
+        // Rage
+        rage = new Move("RAGE");
+        rage.attribute = GameController.fighting;
+        rage.power = 0;
+        rage.special = true;
+        rage.callback = new MoveCallback(rageCallback);
+
+        // Punch
+        punch = new Move("PUNCH");
+        punch.attribute = GameController.fighting;
+        punch.power = 70;
+        punch.special = false;
+
+        ///
+        /// BERNIE
+        /// 
 
         ///
         /// ROBERTA
@@ -182,6 +257,12 @@ public class Movelist : MonoBehaviour
         }
     }
 
+    public static void lowerDefense1(Pokemon attacker, Pokemon defender, int damageDealt)
+    {
+        defender.statBlock.changeStage(Stat.DEFENSE, -1);
+        DialogueManager.instance.addToQueue(defender.name + "'s DEFENSE fell!");
+    }
+
     ///
     /// Specific callbacks
     ///
@@ -215,7 +296,7 @@ public class Movelist : MonoBehaviour
     public static void cleverGirlCallback(Pokemon attacker, Pokemon defender, int damageDealt)
     {
         attacker.statBlock.resetStatsExceptHP();
-        DialogueManager.instance.addToQueue(attacker.name + " ended all status effects and debuffs on her!");
+        DialogueManager.instance.addToQueue(attacker.name + " ended all status effects/debuffs!");
     }
 
     public static void meteorCallback(Pokemon attacker, Pokemon defender, int damageDealt)
@@ -224,5 +305,23 @@ public class Movelist : MonoBehaviour
         DialogueManager.instance.addToQueue(attacker.name + "'s SP. ATTACK sharply fell!");
     }
 
-    
+    public static void restCallback(Pokemon attacker, Pokemon defender, int damageDealt)
+    {
+        attacker.clearStatuses();
+        attacker.addStatusEffect(Status.ASLEEP);
+        attacker.statBlock.accuracy_stage = 0;
+        attacker.statBlock.current_hp = attacker.statBlock.base_hp;
+        DialogueManager.instance.addToQueue(attacker.name + " fell asleep!");
+    }
+
+    public static void rageCallback(Pokemon attacker, Pokemon defender, int damageDealt)
+    {
+        attacker.confused = true;
+        attacker.statBlock.changeStage(Stat.ATTACK, 3);
+        attacker.statBlock.changeStage(Stat.DEFENSE, 1);
+        DialogueManager.instance.addToQueue(attacker.name + "'s ATTACK drastically rose!");
+        DialogueManager.instance.addToQueue(attacker.name + "'s DEFENSE rose!");
+        DialogueManager.instance.addToQueue(attacker.name + " became confused!");
+    }
+
 }

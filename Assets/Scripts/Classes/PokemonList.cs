@@ -8,7 +8,7 @@ public class PokemonList : MonoBehaviour
      * TimLex - swords dance abusing special sweeper
      * Fluffy IV - Fast physical sweeper
      * Fluffy V - Bulky physical utility
-     * Lady Edelmarch - Suicide Sweeper
+     * Lady Edelmarch - Bulky physical sweeper
      * Oatmeal - Bulky special sweeper
      * Bernie - Bulky physical sweeper
      */
@@ -52,7 +52,10 @@ public class PokemonList : MonoBehaviour
 
         fluffy4.types.Add(GameController.dark);
 
-        fluffy4.moves.Add(Movelist.tackle);
+        fluffy4.moves.Add(Movelist.bite);
+        fluffy4.moves.Add(Movelist.fireFang);
+        fluffy4.moves.Add(Movelist.chainsaw);
+        fluffy4.moves.Add(Movelist.tailWhip);
 
         fluffy4.sprite          = GameController.instance.fluffy4Sprite;
         fluffy4.frontSprite     = GameController.instance.fluffy4FrontSprite;
@@ -78,7 +81,7 @@ public class PokemonList : MonoBehaviour
         oatmeal.spriteScale     = new Vector3(5.0f, 5.0f, 0);
 
         // LADY EDELMARCH
-        hp      = 100;
+        hp      = 1000;
         atk     = 100;
         def     = 100;
         spAtk   = 100;
@@ -90,8 +93,11 @@ public class PokemonList : MonoBehaviour
         ladyEdelmarch.types.Add(GameController.normal);
         ladyEdelmarch.types.Add(GameController.fighting);
 
-        ladyEdelmarch.moves.Add(Movelist.tackle);
-        
+        ladyEdelmarch.moves.Add(Movelist.twilightAxe);
+        ladyEdelmarch.moves.Add(Movelist.rest);
+        ladyEdelmarch.moves.Add(Movelist.rage);
+        ladyEdelmarch.moves.Add(Movelist.punch);
+
         ladyEdelmarch.sprite        = GameController.instance.ladyEdelmarchSprite;
         ladyEdelmarch.frontSprite   = GameController.instance.ladyEdelmarchFrontSprite;
         ladyEdelmarch.spriteScale   = new Vector3(1.0f, 1.0f, 0);
@@ -130,7 +136,7 @@ public class PokemonList : MonoBehaviour
 
         bernie.types.Add(GameController.steel);
 
-        bernie.moves.Add(Movelist.tackle);
+        bernie.moves.Add(Movelist.tackle); // keep this
 
         bernie.sprite       = GameController.instance.bernieSprite;
         bernie.frontSprite  = GameController.instance.bernieFrontSprite;

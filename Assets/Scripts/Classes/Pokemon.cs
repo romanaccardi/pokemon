@@ -314,6 +314,12 @@ public class Pokemon //: MonoBehaviour
         }
     }
 
+    public void gainHealth(int health)
+    {
+        statBlock.current_hp = 
+            (statBlock.current_hp + health > statBlock.base_hp ? statBlock.base_hp : statBlock.current_hp + health);
+    }
+
     public bool addStatusEffect(Status status)
     {
         if (!this.statuses.Contains(status))
@@ -325,6 +331,11 @@ public class Pokemon //: MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void clearStatuses()
+    {
+        this.statuses.Clear();
     }
 
     public void executeMove(Move move, Pokemon defender)
@@ -417,6 +428,7 @@ public class Pokemon //: MonoBehaviour
             int comeOutOfConfusion = UnityEngine.Random.Range(0, 3); // one in 3 chance
             if(comeOutOfConfusion <= 0)
             {
+                this.confused = false;
                 DialogueManager.instance.addToQueue(this.name + " is no longer confused!");
             }
             else
