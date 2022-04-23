@@ -153,6 +153,7 @@ public class MenuController : MonoBehaviour
             moveset.text = "";
             for(int j = 0; j < correspondingPokemon.moves.Count; ++j)
             {
+                Debug.Log(correspondingPokemon.moves[j]);
                 moveset.text += correspondingPokemon.moves[j].name + "\n";
             }
 

@@ -10,7 +10,6 @@ public class Movelist : MonoBehaviour
     }
 
     public static Move tackle;
-    public static Move stomp;
     public static Move splash;
     public static Move bite;
 
@@ -27,9 +26,12 @@ public class Movelist : MonoBehaviour
 
     // Fluffy V
     public static Move rockTomb;
+    public static Move growl;
+    public static Move dynamax;
+    public static Move packTactics;
 
     // Oatmeal
-    public static Move flamethrower;
+    public static Move breathWeapon;
     public static Move waterPulse;
     public static Move iceBeam;
     public static Move hurricane;
@@ -41,6 +43,9 @@ public class Movelist : MonoBehaviour
     public static Move punch;
 
     // Bernie
+    public static Move moralSupport;
+    public static Move niceGuy;
+    public static Move sword;
 
     // Roberta
     public static Move mustGoFaster;
@@ -50,6 +55,7 @@ public class Movelist : MonoBehaviour
     public static Move closerThanTheyAppear;
     public static Move amber;
     public static Move earthquake;
+    public static Move stomp;
 
     public static void initMoves()
     {
@@ -143,24 +149,44 @@ public class Movelist : MonoBehaviour
         /// 
         {
             // Rock Tomb
-            fireFang = new Move("ROCK TOMB");
-            fireFang.attribute = GameController.rock;
-            fireFang.power = 60;
-            fireFang.special = false;
-            fireFang.accuracy = 0.95f;
-            fireFang.callback = new MoveCallback(chanceToBurn);
+            rockTomb = new Move("ROCK TOMB");
+            rockTomb.attribute = GameController.rock;
+            rockTomb.power = 60;
+            rockTomb.special = false;
+            rockTomb.accuracy = 0.95f;
+            rockTomb.callback = new MoveCallback(lowerSpeed1);
+
+            // Dynamax
+            dynamax = new Move("DYNAMAX");
+            dynamax.attribute = GameController.fairy;
+            dynamax.power = 0;
+            dynamax.special = true;
+            dynamax.callback = new MoveCallback(dynamaxCallback);
+
+            // Growl
+            growl = new Move("GROWL");
+            growl.attribute = GameController.normal;
+            growl.power = 0;
+            growl.special = true;
+            growl.callback = new MoveCallback(lowerAttack1);
+
+            // Pack Tactics
+            packTactics = new Move("PACK TACTICS");
+            packTactics.attribute = GameController.normal;
+            packTactics.power = 80;
+            packTactics.special = false;
         }
 
         ///
         /// OATMEAL
         /// 
         {
-            // Flamethrower
-            flamethrower = new Move("FLAMETHROWER");
-            flamethrower.attribute = GameController.fire;
-            flamethrower.power = 90;
-            flamethrower.special = true;
-            flamethrower.callback = new MoveCallback(chanceToBurn);
+            // Breath weapon
+            breathWeapon = new Move("BREATH WEAPON");
+            breathWeapon.attribute = GameController.fire;
+            breathWeapon.power = 90;
+            breathWeapon.special = true;
+            breathWeapon.callback = new MoveCallback(chanceToBurn);
 
             // Water Pulse
             waterPulse = new Move("WATER PULSE");
@@ -221,6 +247,27 @@ public class Movelist : MonoBehaviour
         /// BERNIE
         /// 
         {
+            // Tackle
+
+            // Sword
+            sword = new Move("SWORD");
+            sword.attribute = GameController.steel;
+            sword.power = 75;
+            sword.special = false;
+
+            // Moral Support
+            moralSupport = new Move("MORAL SUPPORT");
+            moralSupport.attribute = GameController.psychic;
+            moralSupport.power = 0;
+            moralSupport.special = true;
+            moralSupport.callback = new MoveCallback(moralSupportCallback);
+
+            // Nice Guy
+            niceGuy = new Move("NICE GUY");
+            niceGuy.attribute = GameController.psychic;
+            niceGuy.power = 0;
+            niceGuy.special = true;
+            niceGuy.callback = new MoveCallback(niceGuyCallback);
 
         }
 
@@ -341,6 +388,12 @@ public class Movelist : MonoBehaviour
         DialogueManager.instance.addToQueue(defender.name + "'s SPEED fell!");
     }
 
+    public static void lowerAttack1(Pokemon attacker, Pokemon defender, int damageDealt)
+    {
+        defender.statBlock.changeStage(Stat.ATTACK, -1);
+        DialogueManager.instance.addToQueue(defender.name + "'s ATTACK fell!");
+    }
+
     ///
     /// Utilities
     ///
@@ -400,6 +453,7 @@ public class Movelist : MonoBehaviour
     {
         attacker.statBlock.resetDebuffsOnly();
         attacker.clearStatuses();
+        attacker.confused = false;
         DialogueManager.instance.addToQueue(attacker.name + " lost all status effects/debuffs!");
     }
 
@@ -435,6 +489,43 @@ public class Movelist : MonoBehaviour
     public static void hurricaneCallback(Pokemon attacker, Pokemon defender, int damageDealt)
     {
         chanceToConfuse(defender, 0.3f); // 30% chance
+    }
+
+    public static void dynamaxCallback(Pokemon attacker, Pokemon defender, int damageDealt)
+    {
+        attacker.statBlock.changeStage(Stat.ATTACK, 1);
+        attacker.statBlock.changeStage(Stat.SPECIAL_ATTACK, 1);
+        attacker.statBlock.changeStage(Stat.DEFENSE, 1);
+        attacker.statBlock.changeStage(Stat.SPEED, 1);
+        attacker.statBlock.changeStage(Stat.SPECIAL_DEFENSE, 1);
+        DialogueManager.instance.addToQueue("Basically all of " + attacker.name + "'s stats rose!");
+        chanceToFlinch(attacker, defender, damageDealt);
+    }
+
+    public static void moralSupportCallback(Pokemon attacker, Pokemon defender, int damageDealt)
+    {
+        // Weird one--actually give health to all party members
+        foreach(Pokemon friendly in GameController.instance.friendlyPokemon)
+        {
+            if(friendly.conscious)
+            {
+                friendly.gainHealth(15);
+            }
+        }
+        DialogueManager.instance.addToQueue("All allies gained health!");
+    }
+
+    public static void niceGuyCallback(Pokemon attacker, Pokemon defender, int damageDealt)
+    {
+        // Weird one--remove status ailments from party members
+        foreach (Pokemon friendly in GameController.instance.friendlyPokemon)
+        {
+            if (friendly.conscious)
+            {
+                friendly.clearStatuses();
+            }
+        }
+        DialogueManager.instance.addToQueue("All allies were cured of status effects!");
     }
 
 }

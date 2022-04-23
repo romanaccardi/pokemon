@@ -65,8 +65,6 @@ public class Move
         // Deal damage to the defending Pokemon
         defender.takeDamage(injury);
 
-        Debug.Log(injury);
-
         // update the UI elements to reflect new damage
         ActivePokemon.instance.updateUIElements();
         EnemyPokemon.instance.updateUIElements();

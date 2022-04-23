@@ -34,7 +34,10 @@ public class PokemonList : MonoBehaviour
 
         fluffy5.types.Add(GameController.rock);
 
-        fluffy5.moves.Add(Movelist.tackle);
+        fluffy5.moves.Add(Movelist.rockTomb);
+        fluffy5.moves.Add(Movelist.growl);
+        fluffy5.moves.Add(Movelist.packTactics);
+        fluffy5.moves.Add(Movelist.dynamax);
 
         fluffy5.sprite          = GameController.instance.fluffy5Sprite;
         fluffy5.frontSprite     = GameController.instance.fluffy5FrontSprite;
@@ -74,7 +77,7 @@ public class PokemonList : MonoBehaviour
         oatmeal.types.Add(GameController.dragon);
         oatmeal.types.Add(GameController.fairy);
 
-        oatmeal.moves.Add(Movelist.flamethrower);
+        oatmeal.moves.Add(Movelist.breathWeapon);
         oatmeal.moves.Add(Movelist.waterPulse);
         oatmeal.moves.Add(Movelist.iceBeam);
         oatmeal.moves.Add(Movelist.hurricane);
@@ -140,6 +143,9 @@ public class PokemonList : MonoBehaviour
         bernie.types.Add(GameController.steel);
 
         bernie.moves.Add(Movelist.tackle); // keep this
+        bernie.moves.Add(Movelist.sword);
+        bernie.moves.Add(Movelist.moralSupport);
+        bernie.moves.Add(Movelist.niceGuy);
 
         bernie.sprite       = GameController.instance.bernieSprite;
         bernie.frontSprite  = GameController.instance.bernieFrontSprite;

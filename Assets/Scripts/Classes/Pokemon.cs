@@ -474,9 +474,8 @@ public class Pokemon //: MonoBehaviour
                     DialogueManager.instance.addToQueue(this.name + " hurt itself in its confusion!");
 
                     this.takeConfusionDamage();
+                    return;
                 }
-                return;
-
             }
         }
 
