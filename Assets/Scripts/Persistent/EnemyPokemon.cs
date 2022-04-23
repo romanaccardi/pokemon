@@ -66,7 +66,7 @@ public class EnemyPokemon : MonoBehaviour
         // 20% chance to just use a move based on current type
         if(Random.Range(0.0f, 1.0f) < 0.2f)
         {
-            move = new Move("WELCOME...");
+            move = new Move("ADAPT TO SURVIVE");
             move.attribute = this.enemyPokemon.types[0];
             move.power = 80;
             move.special = true;

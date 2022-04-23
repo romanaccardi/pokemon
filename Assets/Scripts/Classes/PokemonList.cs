@@ -24,11 +24,11 @@ public class PokemonList : MonoBehaviour
         // TODO
         // FLUFFY V
         hp      = 100;
-        atk     = 100;
+        atk     = 110;
         def     = 100;
-        spAtk   = 100;
-        spDef   = 100;
-        spe     = 100;
+        spAtk   = 15;
+        spDef   = 120;
+        spe     = 90;
         StatBlock fluffyVStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
         Pokemon fluffy5 = new Pokemon("FLUFFY V", fluffyVStatblock);
 
@@ -44,12 +44,12 @@ public class PokemonList : MonoBehaviour
         fluffy5.spriteScale     = new Vector3(2.5f, 2.5f, 0);
 
         // FLUFFY IV
-        hp      = 100;
-        atk     = 100;
-        def     = 100;
-        spAtk   = 100;
-        spDef   = 100;
-        spe     = 100;
+        hp      = 130;
+        atk     = 120;
+        def     = 110;
+        spAtk   = 15;
+        spDef   = 110;
+        spe     = 110;
         StatBlock fluffyIVStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
         Pokemon fluffy4 = new Pokemon("FLUFFY IV", fluffyIVStatblock);
 
@@ -65,12 +65,12 @@ public class PokemonList : MonoBehaviour
         fluffy4.spriteScale     = new Vector3(5.0f, 5.0f, 0);
 
         // OATMEAL
-        hp      = 100;
+        hp      = 90;
         atk     = 100;
         def     = 100;
-        spAtk   = 100;
+        spAtk   = 120;
         spDef   = 100;
-        spe     = 100;
+        spe     = 130;
         StatBlock oatmealStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
         Pokemon oatmeal = new Pokemon("OATMEAL", oatmealStatblock);
 
@@ -87,9 +87,9 @@ public class PokemonList : MonoBehaviour
         oatmeal.spriteScale     = new Vector3(5.0f, 5.0f, 0);
 
         // LADY EDELMARCH
-        hp      = 200;
+        hp      = 250;
         atk     = 100;
-        def     = 70;
+        def     = 95;
         spAtk   = 20;
         spDef   = 40;
         spe     = 65;
@@ -109,12 +109,12 @@ public class PokemonList : MonoBehaviour
         ladyEdelmarch.spriteScale   = new Vector3(1.0f, 1.0f, 0);
 
         // TIMLEX
-        hp      = 100;
+        hp      = 90;
         atk     = 100;
-        def     = 100;
-        spAtk   = 100;
-        spDef   = 100;
-        spe     = 100;
+        def     = 110;
+        spAtk   = 120;
+        spDef   = 110;
+        spe     = 110;
         StatBlock timlexStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
         Pokemon timlex = new Pokemon("TIMLEX", timlexStatblock);
 
@@ -131,12 +131,12 @@ public class PokemonList : MonoBehaviour
         timlex.spriteScale   = new Vector3(2.5f, 2.5f, 0);
 
         // BERNIE
-        hp      = 100;
-        atk     = 100;
-        def     = 100;
-        spAtk   = 100;
-        spDef   = 100;
-        spe     = 100;
+        hp      = 150;
+        atk     = 80;
+        def     = 120;
+        spAtk   = 15;
+        spDef   = 120;
+        spe     = 70;
         StatBlock bernieStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
         Pokemon bernie = new Pokemon("BERNIE", bernieStatblock);
 

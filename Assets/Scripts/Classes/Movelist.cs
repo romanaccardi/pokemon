@@ -424,8 +424,8 @@ public class Movelist : MonoBehaviour
     ///
     public static void enlargeCallback(Pokemon attacker, Pokemon defender, int damageDealt)
     {
-        attacker.statBlock.changeStage(Stat.ATTACK, 1);
-        DialogueManager.instance.addToQueue(attacker.name + "'s ATTACK rose!");
+        attacker.statBlock.changeStage(Stat.SPECIAL_ATTACK, 1);
+        DialogueManager.instance.addToQueue(attacker.name + "'s SP. ATK rose!");
     }
     
     public static void spiderClimbCallback(Pokemon attacker, Pokemon defender, int damageDealt)

@@ -150,6 +150,7 @@ public class GameController : MonoBehaviour
                     gameState = GameState.LAST_CHANCE;
                     return;
                 }
+                Debug.Log(this.turnCount);
                 if(!consciousnessCheck())
                 {
                     menuControllerGameObject.GetComponent<MenuController>().showOnStartup();
@@ -159,8 +160,8 @@ public class GameController : MonoBehaviour
                 // then we know that the dialogue queue is empty
                 ++this.turnCount;
 
-                // Change type every 6 turns
-                if(this.turnCount % 6 == 0 && this.turnCount != 0)
+                // Change type every 3 turns
+                if(this.turnCount % 3 == 0 && this.turnCount != 0)
                 {
                     DialogueManager.instance.addToQueue("Life is finding a way...");
                     this.enemyPokemonGameObject.GetComponent<EnemyPokemon>().chooseNewAttribute();
@@ -219,8 +220,6 @@ public class GameController : MonoBehaviour
                     default:
                         break;
                 }
-                // Increment turn count
-                ++this.turnCount;
                 break;
             case GameState.EXECUTING_PLAYER_MOVE:
                 // execute the player move

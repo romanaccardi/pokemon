@@ -79,6 +79,8 @@ public class Attribute
                 return "FIGHTING";
             case TypeSpecifier.POISON:
                 return "POISON";
+            case TypeSpecifier.GROUND:
+                return "GROUND";
             case TypeSpecifier.FLYING:
                 return "FLYING";
             case TypeSpecifier.PSYCHIC:
