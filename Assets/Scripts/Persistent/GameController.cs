@@ -493,27 +493,34 @@ public class GameController : MonoBehaviour
     private void roberta()
     {
         // Initialize enemy pokemon
-        int hp = 1000;
-        int atk = 120;
-        int def = 120;
-        int spAtk = 120;
-        int spDef = 120;
-        int spe = 120;
+        int hp      = 1000;
+        int atk     = 120;
+        int def     = 120;
+        int spAtk   = 120;
+        int spDef   = 120;
+        int spe     = 80;
         StatBlock statBlock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
-        enemyPokemon = new Pokemon("ROBERTA, THE DIRE T-REX", statBlock);
+        enemyPokemon = new Pokemon("DIRE T-REX", statBlock);
         EnemyPokemon.instance.loadEnemyPokemon(enemyPokemon);
 
         enemyPokemon.sprite = this.robertaSprite;
         enemyPokemon.types.Add(rock);
 
-        enemyPokemon.moves.Add(Movelist.tackle);
+        enemyPokemon.moves.Add(Movelist.bite);
+        enemyPokemon.moves.Add(Movelist.stomp);
+        enemyPokemon.moves.Add(Movelist.meteor);
+
+        // utility moves
+        enemyPokemon.moves.Add(Movelist.lifeFindsAWay);
+        enemyPokemon.moves.Add(Movelist.mustGoFaster);
+        enemyPokemon.moves.Add(Movelist.cleverGirl);
+        enemyPokemon.moves.Add(Movelist.closerThanTheyAppear);
     }
 
     private void playerMove()
     {
         Pokemon activePokemon = getActivePokemon();
         ActivePokemon.instance.executeMoveAt((int)queuedPlayerAction);
-        // TODO - check for fainting, or maybe do that up the call stack
     }
 
     public bool canCloseMenu()

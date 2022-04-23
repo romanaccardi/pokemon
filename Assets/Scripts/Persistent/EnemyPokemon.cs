@@ -37,6 +37,7 @@ public class EnemyPokemon : MonoBehaviour
     {
         // TODO -- decide on a move
         enemyPokemon.executeRandomMove(GameController.instance.getActivePokemon());
+        this.updateUIElements();
     }
 
     // Update all UI elements according to the current state of the Pokemon

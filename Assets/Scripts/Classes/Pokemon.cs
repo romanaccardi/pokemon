@@ -22,7 +22,9 @@ public enum Stat
     DEFENSE,
     SPECIAL_ATTACK,
     SPECIAL_DEFENSE,
-    SPEED
+    SPEED,
+    EVASION,
+    ACCURACY
 }
 
 public class StatBlock
@@ -45,8 +47,8 @@ public class StatBlock
 
     // Weird stats--accuracy is chance to hit,
     // evasion is chance to randomly dodge
-    public float accuracy;
-    public float evasion;
+    public int accuracy_stage;
+    public int evasion_stage;
 
     // Stat stages--I hate this
     public int atk_stage;
@@ -95,8 +97,8 @@ public class StatBlock
         spDef_stage = 0;
         spe_stage   = 0;
 
-        accuracy = 1.0f;
-        evasion = 0.01f;
+        accuracy_stage = 0;
+        evasion_stage  = 0;
     }
 
     public void resetStatsExceptHP()
@@ -158,25 +160,103 @@ public class StatBlock
         switch(stat)
         {
             case Stat.ATTACK:
-                atk_stage = Math.Abs(atk_stage + amountToChange) > 6 ? atk_stage : atk_stage + amountToChange;
+                atk_stage = getNewStage(atk_stage, amountToChange);
                 break;
             case Stat.DEFENSE:
-                def_stage = Math.Abs(def_stage + amountToChange) > 6 ? def_stage : def_stage + amountToChange;
+                def_stage = getNewStage(def_stage, amountToChange);
                 break;
             case Stat.SPECIAL_ATTACK:
-                spAtk_stage = Math.Abs(spAtk_stage + amountToChange) > 6 ? spAtk_stage : spAtk_stage + amountToChange;
+                spAtk_stage = getNewStage(spAtk_stage, amountToChange);
                 break;
             case Stat.SPECIAL_DEFENSE:
-                spDef_stage = Math.Abs(spDef_stage + amountToChange) > 6 ? spDef_stage : spDef_stage + amountToChange;
+                spDef_stage = getNewStage(spDef_stage, amountToChange);
                 break;
             case Stat.SPEED:
-                spe_stage = Math.Abs(spe_stage + amountToChange) > 6 ? spe_stage : spe_stage + amountToChange;
+                spe_stage = getNewStage(spe_stage, amountToChange);
+                break;
+            case Stat.EVASION:
+                if(evasion_stage + amountToChange < 0)
+                {
+                    evasion_stage = 0;
+                }
+                if(evasion_stage + amountToChange > 6)
+                {
+                    evasion_stage = 6;
+                }
+                break;
+            case Stat.ACCURACY:
+                if (accuracy_stage + amountToChange < 0)
+                {
+                    accuracy_stage = 0;
+                }
+                if (evasion_stage + amountToChange > 6)
+                {
+                    accuracy_stage = 6;
+                }
                 break;
             default:
                 break;
         }
 
         calculateCurrentStatValues();
+    }
+
+    public static int getNewStage(int currentStage, int amountToChange)
+    {
+        return (Math.Abs(currentStage + amountToChange) > 6 ? currentStage : currentStage + amountToChange);
+    }
+
+    public float getChanceToHit()
+    {
+        switch(this.accuracy_stage)
+        {
+            case -6:
+                return 0.284f;
+            case -5:
+                return 0.329f;
+            case -4:
+                return 0.404f;
+            case -3:
+                return 0.427f;
+            case -2:
+                return 0.533f;
+            case -1:
+                return 0.674f;
+            default:
+                return 1.0f;
+        }
+    }
+    
+    public float getChanceToEvade()
+    {
+        switch(this.evasion_stage)
+        {
+            case 1:
+                return 0.341f;
+            case 2:
+                return 0.5f;
+            case 3:
+                return 0.558f;
+            case 4:
+                return 0.596f;
+            case 5:
+                return 0.671f;
+            case 6:
+                return 0.716f;
+            default:
+                return 0.001f;
+        }
+    }
+
+    public bool buffedOrDebuffed()
+    {
+        return this.current_atk    != this.base_atk
+            || this.current_def    != this.base_def
+            || this.current_spAtk  != this.base_spAtk
+            || this.current_spDef  != this.base_spDef
+            || this.current_spe    != this.base_spe
+            || this.evasion_stage  != 0
+            || this.accuracy_stage != 0;
     }
 }
 
@@ -231,6 +311,19 @@ public class Pokemon //: MonoBehaviour
         {
             statBlock.current_hp = 0;
             conscious = false;
+        }
+    }
+
+    public bool addStatusEffect(Status status)
+    {
+        if (!this.statuses.Contains(status))
+        {
+            this.statuses.Add(status);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

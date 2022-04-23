@@ -4,11 +4,33 @@ using UnityEngine;
 
 public class PokemonList : MonoBehaviour
 {
+    /*
+     * TimLex - swords dance abusing special sweeper
+     * Fluffy IV - Fast physical sweeper
+     * Fluffy V - Bulky physical utility
+     * Lady Edelmarch - Suicide Sweeper
+     * Oatmeal - Bulky special sweeper
+     * Bernie - Bulky physical sweeper
+     */
     public static void initPokemon()
     {
+        int hp;
+        int atk;
+        int def;
+        int spAtk;
+        int spDef;
+        int spe;
+
         // TODO
         // FLUFFY V
-        Pokemon fluffy5 = new Pokemon("FLUFFY V");
+        hp      = 100;
+        atk     = 100;
+        def     = 100;
+        spAtk   = 100;
+        spDef   = 100;
+        spe     = 100;
+        StatBlock fluffyVStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
+        Pokemon fluffy5 = new Pokemon("FLUFFY V", fluffyVStatblock);
 
         fluffy5.types.Add(GameController.rock);
 
@@ -19,7 +41,14 @@ public class PokemonList : MonoBehaviour
         fluffy5.spriteScale     = new Vector3(2.5f, 2.5f, 0);
 
         // FLUFFY IV
-        Pokemon fluffy4 = new Pokemon("FLUFFY IV");
+        hp      = 100;
+        atk     = 100;
+        def     = 100;
+        spAtk   = 100;
+        spDef   = 100;
+        spe     = 100;
+        StatBlock fluffyIVStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
+        Pokemon fluffy4 = new Pokemon("FLUFFY IV", fluffyIVStatblock);
 
         fluffy4.types.Add(GameController.dark);
 
@@ -30,7 +59,14 @@ public class PokemonList : MonoBehaviour
         fluffy4.spriteScale     = new Vector3(5.0f, 5.0f, 0);
 
         // OATMEAL
-        Pokemon oatmeal = new Pokemon("OATMEAL");
+        hp      = 100;
+        atk     = 100;
+        def     = 100;
+        spAtk   = 100;
+        spDef   = 100;
+        spe     = 100;
+        StatBlock oatmealStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
+        Pokemon oatmeal = new Pokemon("OATMEAL", oatmealStatblock);
 
         oatmeal.types.Add(GameController.dragon);
         oatmeal.types.Add(GameController.fairy);
@@ -42,7 +78,14 @@ public class PokemonList : MonoBehaviour
         oatmeal.spriteScale     = new Vector3(5.0f, 5.0f, 0);
 
         // LADY EDELMARCH
-        Pokemon ladyEdelmarch = new Pokemon("LADY EDELMARCH");
+        hp      = 100;
+        atk     = 100;
+        def     = 100;
+        spAtk   = 100;
+        spDef   = 100;
+        spe     = 100;
+        StatBlock edelmarchStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
+        Pokemon ladyEdelmarch = new Pokemon("LADY EDELMARCH", edelmarchStatblock);
 
         ladyEdelmarch.types.Add(GameController.normal);
         ladyEdelmarch.types.Add(GameController.fighting);
@@ -54,7 +97,14 @@ public class PokemonList : MonoBehaviour
         ladyEdelmarch.spriteScale   = new Vector3(1.0f, 1.0f, 0);
 
         // TIMLEX
-        Pokemon timlex = new Pokemon("TIMLEX");
+        hp      = 100;
+        atk     = 100;
+        def     = 100;
+        spAtk   = 100;
+        spDef   = 100;
+        spe     = 100;
+        StatBlock timlexStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
+        Pokemon timlex = new Pokemon("TIMLEX", timlexStatblock);
 
         timlex.types.Add(GameController.steel);
         timlex.types.Add(GameController.psychic);
@@ -69,7 +119,14 @@ public class PokemonList : MonoBehaviour
         timlex.spriteScale   = new Vector3(2.5f, 2.5f, 0);
 
         // BERNIE
-        Pokemon bernie = new Pokemon("BERNIE");
+        hp      = 100;
+        atk     = 100;
+        def     = 100;
+        spAtk   = 100;
+        spDef   = 100;
+        spe     = 100;
+        StatBlock bernieStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
+        Pokemon bernie = new Pokemon("BERNIE", bernieStatblock);
 
         bernie.types.Add(GameController.steel);
 

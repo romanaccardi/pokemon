@@ -99,11 +99,7 @@ public class ActivePokemon : MonoBehaviour
             pokemon.executeMoveAt(moveNum, GameController.instance.getEnemyPokemon());
         }
 
-        // check to see if the defender fainted
-        if( !enemyPokemon.conscious )
-        {
-            // TODO - end game
-        }
+        this.updateUIElements();
     }
 
 }

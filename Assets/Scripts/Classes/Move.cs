@@ -12,6 +12,7 @@ public class Move
     public bool special;
     public string additionalMessage;
     public float accuracy;
+    public bool executeCallbackEvenIfEnemyFainted;
 
     public Move(string name)
     {
@@ -19,6 +20,7 @@ public class Move
         callback = null;
         this.additionalMessage = "";
         this.accuracy = 1.0f;
+        this.executeCallbackEvenIfEnemyFainted = false;
     }
 
     public void execute(Pokemon attacker, Pokemon defender)
@@ -28,6 +30,11 @@ public class Move
         // If not, you can just execute the callback and return
         if( power == 0 )
         {
+            if(Random.Range(0.0f, 1.0f) > this.accuracy)
+            {
+                DialogueManager.instance.addToQueue("But, it failed!");
+                return;
+            }
             if( callback != null )
             {
                 callback.callback(attacker, defender, 0);
@@ -36,12 +43,23 @@ public class Move
         }
 
         // TODO - check for miss
+        bool miss = Random.Range(0.0f, 1.0f) > this.accuracy * attacker.statBlock.getChanceToHit();
+        if(miss)
+        {
+            DialogueManager.instance.addToQueue(attacker.name + "'s attack missed!");
+            return;
+        }
 
-        int injury;
+        bool evade = Random.Range(0.0f, 1.0f) < defender.statBlock.getChanceToEvade();
+        if(evade)
+        {
+            DialogueManager.instance.addToQueue(defender.name + " evaded the attack!");
+            return;
+        }
 
         bool crit = Random.Range(0.0f, 1.0f) < 0.0625f;
 
-        injury = Pokemon.calculateAdjustedInjury(attacker, defender, this, crit);
+        int injury = Pokemon.calculateAdjustedInjury(attacker, defender, this, crit);
 
         // TODO - animation
 
@@ -67,11 +85,13 @@ public class Move
         }
 
         // return before the callback if the defender is unconscious
-        // TODO this is a bit of a hack, sometimes the callback probably should be executed
         if (defender.statBlock.current_hp <= 0)
         {
             defender.conscious = false;
-            return;
+            if(!this.executeCallbackEvenIfEnemyFainted)
+            {
+                return;
+            }
         }
 
         if ( this.additionalMessage != "" )
