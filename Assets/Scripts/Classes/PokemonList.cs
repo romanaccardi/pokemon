@@ -74,19 +74,22 @@ public class PokemonList : MonoBehaviour
         oatmeal.types.Add(GameController.dragon);
         oatmeal.types.Add(GameController.fairy);
 
-        oatmeal.moves.Add(Movelist.tackle);
+        oatmeal.moves.Add(Movelist.flamethrower);
+        oatmeal.moves.Add(Movelist.waterPulse);
+        oatmeal.moves.Add(Movelist.iceBeam);
+        oatmeal.moves.Add(Movelist.hurricane);
 
         oatmeal.sprite          = GameController.instance.oatmealSprite;
         oatmeal.frontSprite     = GameController.instance.oatmealFrontSprite;
         oatmeal.spriteScale     = new Vector3(5.0f, 5.0f, 0);
 
         // LADY EDELMARCH
-        hp      = 1000;
+        hp      = 200;
         atk     = 100;
-        def     = 100;
-        spAtk   = 100;
-        spDef   = 100;
-        spe     = 100;
+        def     = 70;
+        spAtk   = 20;
+        spDef   = 40;
+        spe     = 65;
         StatBlock edelmarchStatblock = new StatBlock(hp, atk, def, spAtk, spDef, spe);
         Pokemon ladyEdelmarch = new Pokemon("LADY EDELMARCH", edelmarchStatblock);
 

@@ -509,6 +509,8 @@ public class GameController : MonoBehaviour
         enemyPokemon.moves.Add(Movelist.bite);
         enemyPokemon.moves.Add(Movelist.stomp);
         enemyPokemon.moves.Add(Movelist.meteor);
+        enemyPokemon.moves.Add(Movelist.amber);
+        enemyPokemon.moves.Add(Movelist.earthquake);
 
         // utility moves
         enemyPokemon.moves.Add(Movelist.lifeFindsAWay);

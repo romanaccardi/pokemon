@@ -42,7 +42,6 @@ public class Move
             return;
         }
 
-        // TODO - check for miss
         bool miss = Random.Range(0.0f, 1.0f) > this.accuracy * attacker.statBlock.getChanceToHit();
         if(miss)
         {
@@ -66,6 +65,8 @@ public class Move
         // Deal damage to the defending Pokemon
         defender.takeDamage(injury);
 
+        Debug.Log(injury);
+
         // update the UI elements to reflect new damage
         ActivePokemon.instance.updateUIElements();
         EnemyPokemon.instance.updateUIElements();
@@ -78,6 +79,10 @@ public class Move
         if (Pokemon.findTypeMultiplier(defender.types, this) > 1.1f)
         {
             DialogueManager.instance.addToQueue("It's super effective!");
+        }
+        else if (Pokemon.findTypeMultiplier(defender.types, this) == 0.0f)
+        {
+            DialogueManager.instance.addToQueue("The move had no effect.");
         }
         else if (Pokemon.findTypeMultiplier(defender.types, this) < 0.9f)
         {

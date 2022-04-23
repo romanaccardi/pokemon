@@ -109,6 +109,25 @@ public class StatBlock
         current_hp = hp;
     }
 
+    public void resetDebuffsOnly()
+    {
+        atk_stage   = resetStageDebuff(atk_stage);
+        def_stage   = resetStageDebuff(def_stage);
+        spAtk_stage = resetStageDebuff(spAtk_stage);
+        spDef_stage = resetStageDebuff(spDef_stage);
+        spe_stage   = resetStageDebuff(spe_stage);
+
+        accuracy_stage = resetStageDebuff(accuracy_stage);
+        evasion_stage  = resetStageDebuff(evasion_stage);
+
+        calculateCurrentStatValues();
+    }
+
+    public static int resetStageDebuff(int stage)
+    {
+        return (stage < 0 ? 0 : stage);
+    }
+
     // calculate current values based on stage
     public void calculateCurrentStatValues()
     {
@@ -342,6 +361,7 @@ public class Pokemon //: MonoBehaviour
     {
         bool cantMove = false;
         bool stillAsleep = false;
+        bool stillFrozen = false;
         List<Status> removeTheseStatuses = new List<Status>();
 
         // Start by applying status effect
@@ -387,6 +407,15 @@ public class Pokemon //: MonoBehaviour
                     cantMove = true;
                     break;
                 case Status.FROZEN:
+                    int noLongerFrozen = UnityEngine.Random.Range(0, 5); // one in 5 chance to come out of frozen
+                    if(noLongerFrozen <= 0)
+                    {
+                        DialogueManager.instance.addToQueue(this.name + " came unfrozen!");
+                        removeTheseStatuses.Add(status);
+                        break;
+                    }
+                    stillFrozen = true;
+                    break;
                 case Status.INFATUATED:
                     break;
                 default:
@@ -406,6 +435,11 @@ public class Pokemon //: MonoBehaviour
             this.statuses.Remove(status);
         }
 
+        if( stillFrozen )
+        {
+            DialogueManager.instance.addToQueue(this.name + " is frozen solid!");
+            return;
+        }
         if( stillAsleep ) // sleep
         {
             DialogueManager.instance.addToQueue(this.name + " is fast asleep!");
@@ -425,7 +459,7 @@ public class Pokemon //: MonoBehaviour
 
         if (this.confused)
         {
-            int comeOutOfConfusion = UnityEngine.Random.Range(0, 3); // one in 3 chance
+            int comeOutOfConfusion = UnityEngine.Random.Range(0, 4); // one in 4 chance
             if(comeOutOfConfusion <= 0)
             {
                 this.confused = false;
