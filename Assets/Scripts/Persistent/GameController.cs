@@ -14,6 +14,7 @@ public enum GameState
     FINISHING_TURN_EXECUTION,
     VICTORY,
     LAST_CHANCE,
+    POKE_BALL
 }
 
 public enum PlayerInput
@@ -264,13 +265,24 @@ public class GameController : MonoBehaviour
                 }
                 break;
             case GameState.VICTORY:
-                // TODO - transition to victory scene
                 SceneManager.LoadScene(sceneName: "Victory");
                 break;
+            case GameState.LAST_CHANCE:
+                // TODO - transition to last chance scene
+                SceneManager.LoadScene(sceneName: "LastChance");
+                gameState = GameState.WAITING_FOR_INPUT;
+                break;
+            case GameState.POKE_BALL:
             case GameState.WAITING_FOR_INPUT:
             default:
                 break;
         }
+    }
+
+    public void throwPokeBall()
+    {
+        queuedPlayerAction = PlayerInput.POKEBALL;
+        gameState = GameState.INPUT_RECEIVED;
     }
 
     public bool consciousnessCheck()
@@ -288,6 +300,7 @@ public class GameController : MonoBehaviour
         {
             // clarify that the previous pokemon fainted so that Roberta doesn't attack immediately
             this.previousPokemonFainted = true;
+            gameState = GameState.LAST_CHANCE;
             DialogueManager.instance.addToQueue(getActivePokemon().name + " fainted!");
             // TODO - probably play animation
             return false;
