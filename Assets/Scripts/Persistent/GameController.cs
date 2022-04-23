@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -10,7 +11,9 @@ public enum GameState
     INPUT_RECEIVED,
     EXECUTING_PLAYER_MOVE,
     EXECUTING_ENEMY_MOVE,
-    FINISHING_TURN_EXECUTION
+    FINISHING_TURN_EXECUTION,
+    VICTORY,
+    LAST_CHANCE,
 }
 
 public enum PlayerInput
@@ -108,11 +111,9 @@ public class GameController : MonoBehaviour
         EnemyPokemon.instance.loadEnemyPokemon(enemyPokemon);
 
         // Set the game state
-        gameState = GameState.WAITING_FOR_INPUT;
+        gameState = GameState.START;
         // For all intents and purposes, the previous pokemon fainted
         this.previousPokemonFainted = true;
-
-        menuControllerGameObject.GetComponent<MenuController>().showOnStartup();
 
         DialogueManager.instance.addToQueue("A wild " + getEnemyPokemon().name + " appeared!");
     }
@@ -135,6 +136,10 @@ public class GameController : MonoBehaviour
         // If we're waiting on buffering to finish, just skip everything
         switch( gameState )
         {
+            case GameState.START:
+                menuControllerGameObject.GetComponent<MenuController>().showOnStartup();
+                this.gameState = GameState.WAITING_FOR_INPUT;
+                break;
             case GameState.FINISHING_TURN_EXECUTION:
                 // If the enemy pokemon is unconscious, we've already moved to the victory scene
                 // Otherwise, open up the menu and then change to waiting for input
@@ -211,7 +216,10 @@ public class GameController : MonoBehaviour
                 // before proceeding
                 if( !consciousnessCheck() )
                 {
-                    gameState = GameState.FINISHING_TURN_EXECUTION;
+                    if (getEnemyPokemon().conscious)
+                    {
+                        gameState = GameState.FINISHING_TURN_EXECUTION;
+                    }
                     return;
                 }
 
@@ -234,7 +242,10 @@ public class GameController : MonoBehaviour
                 // before proceeding
                 if (!consciousnessCheck())
                 {
-                    gameState = GameState.FINISHING_TURN_EXECUTION;
+                    if(getEnemyPokemon().conscious)
+                    {
+                        gameState = GameState.FINISHING_TURN_EXECUTION;
+                    }
                     return;
                 }
 
@@ -252,6 +263,10 @@ public class GameController : MonoBehaviour
                     gameState = GameState.FINISHING_TURN_EXECUTION;
                 }
                 break;
+            case GameState.VICTORY:
+                // TODO - transition to victory scene
+                SceneManager.LoadScene(sceneName: "Victory");
+                break;
             case GameState.WAITING_FOR_INPUT:
             default:
                 break;
@@ -263,8 +278,10 @@ public class GameController : MonoBehaviour
         // If the enemy pokemon is unconscious, congratulations, you won!
         if( !getEnemyPokemon().conscious )
         {
-            // TODO - change scene
+            Debug.Log("here");
             // TODO - play animation
+            gameState = GameState.VICTORY;
+            DialogueManager.instance.addToQueue(getEnemyPokemon().name + " fainted!");
             return false;
         }
         if( !getActivePokemon().conscious )
@@ -493,7 +510,7 @@ public class GameController : MonoBehaviour
     private void roberta()
     {
         // Initialize enemy pokemon
-        int hp      = 1000;
+        int hp      = 1;
         int atk     = 120;
         int def     = 120;
         int spAtk   = 120;
