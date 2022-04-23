@@ -7,7 +7,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager instance;
 
-    public const int DIALOGUE_TIME = 1; // TODO
+    public const int DIALOGUE_TIME = 2; // TODO
     public Queue<string> dialogueQueue;
     public Text dialogueText;
 
