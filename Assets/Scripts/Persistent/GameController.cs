@@ -144,6 +144,11 @@ public class GameController : MonoBehaviour
             case GameState.FINISHING_TURN_EXECUTION:
                 // If the enemy pokemon is unconscious, we've already moved to the victory scene
                 // Otherwise, open up the menu and then change to waiting for input
+                if(checkLost())
+                {
+                    gameState = GameState.LAST_CHANCE;
+                    return;
+                }
                 if(!consciousnessCheck())
                 {
                     menuControllerGameObject.GetComponent<MenuController>().showOnStartup();
@@ -269,6 +274,8 @@ public class GameController : MonoBehaviour
                 break;
             case GameState.LAST_CHANCE:
                 // TODO - transition to last chance scene
+                SaveHP.instance.current_hp = this.getEnemyPokemon().statBlock.current_hp;
+                SaveHP.instance.base_hp = this.getEnemyPokemon().statBlock.base_hp;
                 SceneManager.LoadScene(sceneName: "LastChance");
                 gameState = GameState.WAITING_FOR_INPUT;
                 break;
@@ -283,6 +290,20 @@ public class GameController : MonoBehaviour
     {
         queuedPlayerAction = PlayerInput.POKEBALL;
         gameState = GameState.INPUT_RECEIVED;
+    }
+
+    public bool checkLost()
+    {
+
+        bool lost = true;
+        foreach (Pokemon friendly in this.friendlyPokemon)
+        {
+            if (friendly.conscious)
+            {
+                lost = false;
+            }
+        }
+        return lost;
     }
 
     public bool consciousnessCheck()
@@ -300,7 +321,7 @@ public class GameController : MonoBehaviour
         {
             // clarify that the previous pokemon fainted so that Roberta doesn't attack immediately
             this.previousPokemonFainted = true;
-            gameState = GameState.LAST_CHANCE;
+            gameState = GameState.FINISHING_TURN_EXECUTION;
             DialogueManager.instance.addToQueue(getActivePokemon().name + " fainted!");
             // TODO - probably play animation
             return false;
@@ -523,8 +544,8 @@ public class GameController : MonoBehaviour
     private void roberta()
     {
         // Initialize enemy pokemon
-        int hp      = 1;
-        int atk     = 120;
+        int hp      = 1000;
+        int atk     = 500; // TODO
         int def     = 120;
         int spAtk   = 120;
         int spDef   = 120;
@@ -537,16 +558,16 @@ public class GameController : MonoBehaviour
         enemyPokemon.types.Add(rock);
 
         enemyPokemon.moves.Add(Movelist.bite);
-        enemyPokemon.moves.Add(Movelist.stomp);
-        enemyPokemon.moves.Add(Movelist.meteor);
-        enemyPokemon.moves.Add(Movelist.amber);
-        enemyPokemon.moves.Add(Movelist.earthquake);
+        //enemyPokemon.moves.Add(Movelist.stomp);
+        //enemyPokemon.moves.Add(Movelist.meteor);
+        //enemyPokemon.moves.Add(Movelist.amber);
+        //enemyPokemon.moves.Add(Movelist.earthquake);
 
-        // utility moves
-        enemyPokemon.moves.Add(Movelist.lifeFindsAWay);
-        enemyPokemon.moves.Add(Movelist.mustGoFaster);
-        enemyPokemon.moves.Add(Movelist.cleverGirl);
-        enemyPokemon.moves.Add(Movelist.closerThanTheyAppear);
+        //// utility moves
+        //enemyPokemon.moves.Add(Movelist.lifeFindsAWay);
+        //enemyPokemon.moves.Add(Movelist.mustGoFaster);
+        //enemyPokemon.moves.Add(Movelist.cleverGirl);
+        //enemyPokemon.moves.Add(Movelist.closerThanTheyAppear);
     }
 
     private void playerMove()
